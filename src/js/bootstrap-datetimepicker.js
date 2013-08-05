@@ -263,19 +263,26 @@
       var position = 'absolute';
       var offset = this.component ? this.component.offset() : this.$element.offset();
       this.width = this.component ? this.component.outerWidth() : this.$element.outerWidth();
-      offset.top = offset.top + this.height;
+
+      if ( this.options.position == 'top' ) {
+        offset.top = offset.top - this.widget.height() - 10;
+        this.widget.addClass( 'position-top' );
+      } else {
+        offset.top = offset.top + this.height;
+        this.widget.addClass( 'position-bottom' );
+      }
 
       var $window = $(window);
-      
+
       if ( this.options.width != undefined ) {
         this.widget.width( this.options.width );
       }
-      
+
       if ( this.options.orientation == 'left' ) {
         this.widget.addClass( 'left-oriented' );
         offset.left   = offset.left - this.widget.width() + 20;
       }
-      
+
       if (this._isInFixed()) {
         position = 'fixed';
         offset.top -= $window.scrollTop();
